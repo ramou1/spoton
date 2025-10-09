@@ -1,3 +1,10 @@
+import { 
+  BuildingOfficeIcon, 
+  TruckIcon, 
+  CakeIcon, 
+  WrenchScrewdriverIcon 
+} from '@heroicons/react/24/outline';
+
 export interface Space {
   id: string;
   title: string;
@@ -132,25 +139,25 @@ export const spaceTypes = [
   {
     id: 'coworking',
     name: 'Coworkings',
-    icon: '🏢',
+    icon: BuildingOfficeIcon,
     description: 'Espaços de trabalho compartilhado'
   },
   {
     id: 'estacionamento',
     name: 'Estacionamento',
-    icon: '🅿️',
+    icon: TruckIcon,
     description: 'Vagas de estacionamento'
   },
   {
     id: 'restaurante',
     name: 'Restaurantes',
-    icon: '🍽️',
+    icon: CakeIcon,
     description: 'Mesas em restaurantes'
   },
   {
     id: 'servico',
     name: 'Serviços',
-    icon: '🔧',
+    icon: WrenchScrewdriverIcon,
     description: 'Espaços para eventos e reuniões'
   }
 ];
