@@ -26,12 +26,12 @@ export default function Home() {
       <Header />
       
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
             Reserve espaços únicos
           </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
+          <p className="text-lg md:text-xl mb-4 opacity-90">
             De coworkings a restaurantes, encontre o espaço perfeito para suas necessidades
           </p>
         </div>

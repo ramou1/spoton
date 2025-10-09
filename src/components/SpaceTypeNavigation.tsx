@@ -10,24 +10,25 @@ interface SpaceTypeNavigationProps {
 
 export default function SpaceTypeNavigation({ onTypeSelect, selectedType }: SpaceTypeNavigationProps) {
   return (
-    <div className="bg-white py-6">
+    <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="flex items-center justify-center space-x-8 overflow-x-auto py-4">
           {spaceTypes.map((type) => (
             <button
               key={type.id}
               onClick={() => onTypeSelect(type.id)}
-              className={`p-4 rounded-xl border-2 transition-all duration-200 hover:shadow-lg ${
+              className={`flex items-center space-x-3 px-4 py-3 rounded-full transition-all duration-200 whitespace-nowrap ${
                 selectedType === type.id
-                  ? 'border-blue-500 bg-blue-50 shadow-md'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
-              <div className="text-center">
-                <div className="text-3xl mb-2">{type.icon}</div>
-                <h3 className="font-semibold text-gray-900 mb-1">{type.name}</h3>
-                <p className="text-sm text-gray-600">{type.description}</p>
+              <div className={`text-2xl ${
+                selectedType === type.id ? 'text-white' : 'text-gray-600'
+              }`}>
+                {type.icon}
               </div>
+              <span className="font-medium">{type.name}</span>
             </button>
           ))}
         </div>
