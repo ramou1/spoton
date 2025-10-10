@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import SpaceTypeNavigation from '@/components/SpaceTypeNavigation';
 import SearchBar from '@/components/SearchBar';
@@ -22,29 +23,34 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-neutral-950">
       <Header />
       
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-2xl md:text-3xl font-semibold mb-2">
-            Reserve espaços únicos
-          </h1>
-          <p className="text-base md:text-lg mb-4 opacity-90 font-normal">
-            De coworkings a restaurantes, encontre o espaço perfeito para suas necessidades
-          </p>
+      {/* Seção de busca e filtros */}
+      <div className="bg-neutral-800/50 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Título e descrição */}
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-4xl font-semibold mb-2 text-gray-100">
+              Reserve espaços únicos
+            </h1>
+            <p className="text-xs md:text-sm text-gray-400 font-light">
+              De coworkings a restaurantes, encontre o espaço perfeito para suas necessidades
+            </p>
+          </div>
+
+          {/* Barra de busca */}
+          <SearchBar />
+
+          {/* Navegação de tipos */}
+          <div className="mt-8">
+            <SpaceTypeNavigation 
+              onTypeSelect={handleTypeSelect}
+              selectedType={selectedType}
+            />
+          </div>
         </div>
       </div>
-
-      {/* Navegação de tipos */}
-      <SpaceTypeNavigation 
-        onTypeSelect={handleTypeSelect}
-        selectedType={selectedType}
-      />
-
-      {/* Barra de busca */}
-      <SearchBar />
 
       {/* Seções de espaços */}
       <div className="py-8">
@@ -52,7 +58,7 @@ export default function Home() {
           {/* Espaços em destaque */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-lg font-semibold text-gray-100">
                 {selectedType === 'all' 
                   ? 'Espaços em destaque' 
                   : `${filteredSpaces.length} espaços disponíveis`
@@ -61,7 +67,7 @@ export default function Home() {
               {selectedType !== 'all' && (
                 <button
                   onClick={() => setSelectedType('all')}
-                  className="text-blue-500 hover:text-blue-600 font-normal text-sm"
+                  className="text-purple-400 hover:text-purple-300 font-normal text-sm"
                 >
                   Ver todos
                 </button>
@@ -85,7 +91,7 @@ export default function Home() {
           {selectedType === 'all' && (
             <>
               <div className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <h2 className="text-lg font-semibold text-gray-100 mb-4">
                   Coworkings populares
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -99,7 +105,7 @@ export default function Home() {
               </div>
 
               <div className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <h2 className="text-lg font-semibold text-gray-100 mb-4">
                   Estacionamentos em alta
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -113,7 +119,7 @@ export default function Home() {
               </div>
 
               <div className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <h2 className="text-lg font-semibold text-gray-100 mb-4">
                   Restaurantes exclusivos
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -127,7 +133,7 @@ export default function Home() {
               </div>
 
               <div className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <h2 className="text-lg font-semibold text-gray-100 mb-4">
                   Serviços profissionais
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -145,15 +151,18 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
+      <footer className="bg-neutral-950 border-t border-neutral-800 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
-              <div className="flex items-center space-x-2 mb-3">
-                <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center">
-                  <span className="text-white font-semibold text-xs">S</span>
-                </div>
-                <span className="text-lg font-semibold">Spoton</span>
+              <div className="mb-3">
+                <Image 
+                  src="/images/logo-spoton.png" 
+                  alt="Spoton Logo" 
+                  width={120}
+                  height={40}
+                  className="object-contain"
+                />
               </div>
               <p className="text-gray-400 text-sm">
                 Conectando pessoas a espaços únicos em todo o Brasil.
@@ -191,7 +200,7 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-6 pt-6 text-center text-gray-400 text-sm">
+          <div className="border-t border-slate-800 mt-6 pt-6 text-center text-gray-400 text-sm">
             <p>&copy; 2024 Spoton. Todos os direitos reservados.</p>
           </div>
         </div>

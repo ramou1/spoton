@@ -27,27 +27,26 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="bg-gray-50 py-6">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
-          <div className="flex items-center gap-3">
+    <div className="max-w-4xl mx-auto">
+      <div className="bg-neutral-800 rounded-xl border border-neutral-700 p-4 shadow-lg hover:shadow-purple-500/20 transition-all duration-300 hover:scale-[1.01]">
+        <div className="flex items-center gap-3">
             {/* Campo de busca */}
             <div className="flex-1">
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 group-hover:text-purple-400 transition-colors duration-200" />
                 <input
                   type="text"
                   placeholder="Buscar espaços, locais ou serviços..."
                   value={searchData.query}
                   onChange={(e) => handleInputChange('query', e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white transition-all duration-200 hover:border-gray-300"
+                  className="w-full border border-neutral-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-neutral-900 focus:bg-neutral-900/90 transition-all duration-200 hover:border-neutral-600"
                 />
               </div>
             </div>
 
             {/* Botão de localização */}
-            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 hover:scale-105">
+            <button className="flex items-center gap-2 px-3 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-neutral-700 rounded-lg transition-all duration-200 hover:scale-105">
               <MapPinIcon className="w-4 h-4" />
               <span className="hidden sm:inline">Localização</span>
             </button>
@@ -55,7 +54,7 @@ export default function SearchBar() {
             {/* Botão de busca */}
             <button
               onClick={handleSearch}
-              className="bg-blue-500 text-white px-4 py-2.5 rounded-lg hover:bg-blue-600 transition-all duration-200 flex items-center gap-2 text-sm font-normal hover:scale-105 hover:shadow-md active:scale-95"
+              className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-2.5 rounded-lg hover:from-purple-500 hover:to-purple-600 transition-all duration-200 flex items-center gap-2 text-sm font-normal hover:scale-105 hover:shadow-md hover:shadow-purple-500/50 active:scale-95"
               title="Buscar"
             >
               <MagnifyingGlassIcon className="w-4 h-4" />
@@ -64,6 +63,5 @@ export default function SearchBar() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
