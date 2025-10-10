@@ -72,7 +72,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToCadastro }: Logi
       
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl shadow-xl shadow-purple-500/20 w-full max-w-md p-8 transform transition-all">
+        <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl shadow-xl w-full max-w-md p-8 transform transition-all">
           {/* Botão de fechar */}
           <button
             onClick={onClose}
@@ -133,7 +133,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToCadastro }: Logi
             {/* Botão de login */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-lg font-medium hover:from-purple-500 hover:to-purple-600 transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200"
             >
               Entrar
             </button>

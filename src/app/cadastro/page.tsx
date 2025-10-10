@@ -95,7 +95,7 @@ export default function Cadastro() {
       <Header />
       
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <div className="bg-neutral-800 border border-neutral-700 rounded-2xl shadow-xl shadow-purple-500/20 p-8">
+        <div className="bg-neutral-800 border border-neutral-700 rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-100 mb-2">Criar Conta</h1>
             <p className="text-gray-300">Junte-se ao Spoton e encontre espaços únicos</p>
@@ -269,7 +269,7 @@ export default function Cadastro() {
             {/* Botão de cadastro */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-lg font-medium hover:from-purple-500 hover:to-purple-600 transition-all duration-200 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200"
             >
               Criar Conta
             </button>

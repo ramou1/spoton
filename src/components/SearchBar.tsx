@@ -28,7 +28,7 @@ export default function SearchBar() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-neutral-800 rounded-xl border border-neutral-700 p-4 shadow-lg hover:shadow-purple-500/20 transition-all duration-300 hover:scale-[1.01]">
+      <div className="bg-neutral-800 rounded-xl border border-neutral-700 p-4 shadow-lg transition-all duration-300">
         <div className="flex items-center gap-3">
             {/* Campo de busca */}
             <div className="flex-1">
@@ -54,7 +54,7 @@ export default function SearchBar() {
             {/* Botão de busca */}
             <button
               onClick={handleSearch}
-              className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-2.5 rounded-lg hover:from-purple-500 hover:to-purple-600 transition-all duration-200 flex items-center gap-2 text-sm font-normal hover:scale-105 hover:shadow-md hover:shadow-purple-500/50 active:scale-95"
+              className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2.5 rounded-lg hover:from-purple-400 hover:to-purple-500 transition-all duration-200 flex items-center gap-2 text-sm font-normal hover:scale-105 active:scale-95"
               title="Buscar"
             >
               <MagnifyingGlassIcon className="w-4 h-4" />

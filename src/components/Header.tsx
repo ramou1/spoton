@@ -31,7 +31,7 @@ export default function Header() {
           <div className="flex justify-between items-center h-14">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
-              <div className="relative h-10 w-auto group-hover:scale-105 transition-all duration-300 ease-out">
+              <div className="relative h-10 w-auto group-hover:scale-105 transition-all duration-300 ease-out drop-shadow-lg">
                 <Image 
                   src="/images/logo-spoton.png" 
                   alt="Spoton Logo" 
@@ -53,7 +53,7 @@ export default function Header() {
               </button>
               <button
                 onClick={openCadastroModal}
-                className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-1.5 rounded-lg font-normal text-sm hover:from-purple-500 hover:to-purple-600 transition-all duration-200 hover:scale-105 hover:shadow-md hover:shadow-purple-500/50 active:scale-95"
+                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-1.5 rounded-lg font-normal text-sm hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 Cadastrar
               </button>
@@ -84,7 +84,7 @@ export default function Header() {
                 </button>
                 <button
                   onClick={openCadastroModal}
-                  className="block w-full px-3 py-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg font-normal text-sm text-center hover:from-purple-500 hover:to-purple-600 transition-colors duration-200"
+                  className="block w-full px-3 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-normal text-sm text-center hover:from-purple-400 hover:to-purple-500 transition-colors duration-200"
                 >
                   Cadastrar
                 </button>

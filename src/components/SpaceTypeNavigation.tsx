@@ -18,7 +18,7 @@ export default function SpaceTypeNavigation({ onTypeSelect, selectedType }: Spac
             onClick={() => onTypeSelect(type.id)}
             className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95 ${
               selectedType === type.id
-                ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/60'
+                ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white'
                 : 'text-gray-300 hover:bg-neutral-700 hover:text-white'
             }`}
           >

@@ -22,7 +22,7 @@ export default function SpaceCard({ space }: SpaceCardProps) {
   };
 
   return (
-    <div className="bg-neutral-800 rounded-lg border border-neutral-700 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 overflow-hidden group hover:scale-[1.02] hover:-translate-y-1">
+    <div className="bg-neutral-800 rounded-lg border border-neutral-700 hover:border-purple-400/50 hover:shadow-lg transition-all duration-300 overflow-hidden group hover:scale-[1.02] hover:-translate-y-1">
       {/* Imagem */}
       <div className="relative h-40 overflow-hidden">
         <Image
@@ -46,7 +46,7 @@ export default function SpaceCard({ space }: SpaceCardProps) {
 
         {/* Tag de preferido */}
         {space.rating >= 4.8 && (
-          <div className="absolute top-2 left-2 bg-purple-600/90 text-white px-2 py-1 rounded-md text-xs font-normal">
+          <div className="absolute top-2 left-2 bg-purple-500/90 text-white px-2 py-1 rounded-md text-xs font-normal">
             ⭐ Preferido
           </div>
         )}
@@ -92,7 +92,7 @@ export default function SpaceCard({ space }: SpaceCardProps) {
         </div>
 
         {/* Botão de reserva */}
-        <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-2 rounded-md font-normal text-sm hover:from-purple-500 hover:to-purple-600 transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:shadow-purple-500/50 active:scale-[0.98]">
+        <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-md font-normal text-sm hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
           Reservar
         </button>
       </div>
