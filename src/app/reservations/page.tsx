@@ -87,7 +87,7 @@ export default function ReservationsPage() {
             ].map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setFilter(tab.key as any)}
+                onClick={() => setFilter(tab.key as 'all' | 'upcoming' | 'completed' | 'cancelled')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                   filter === tab.key
                     ? 'bg-purple-500 text-white'

@@ -41,7 +41,6 @@ export default function ProfilePage() {
   }
 
   const completedReservations = userReservations.filter(r => r.status === 'completed');
-  const upcomingReservations = userReservations.filter(r => r.status === 'upcoming');
 
   return (
     <div className="min-h-screen bg-neutral-950">

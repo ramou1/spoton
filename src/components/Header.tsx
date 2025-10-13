@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import LoginModal from './LoginModal';
 import CadastroModal from './CadastroModal';
 import { useAuth } from '@/contexts/AuthContext';
