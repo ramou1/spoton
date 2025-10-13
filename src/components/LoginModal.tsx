@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onClose, onSwitchToCadastro }: LoginModalProps) {
+  const { login, isLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     senha: ''
@@ -47,14 +49,18 @@ export default function LoginModal({ isOpen, onClose, onSwitchToCadastro }: Logi
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Implementar lógica de login
-      console.log('Dados do login:', formData);
-      alert('Login realizado com sucesso!');
-      onClose();
+      const success = await login(formData.email, formData.senha);
+      if (success) {
+        onClose();
+        setFormData({ email: '', senha: '' });
+        setErrors({});
+      } else {
+        setErrors({ senha: 'Email ou senha inválidos' });
+      }
     }
   };
 
@@ -131,9 +137,10 @@ export default function LoginModal({ isOpen, onClose, onSwitchToCadastro }: Logi
             {/* Botão de login */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Entrar
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
 
             {/* Divisor */}

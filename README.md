@@ -81,19 +81,6 @@ npm run dev
 
 3. Acesse [http://localhost:3000](http://localhost:3000)
 
-## 🌟 Próximos Passos
-
-- [ ] Integração com banco de dados
-- [ ] Sistema de autenticação real
-- [ ] Página de detalhes do espaço
-- [ ] Sistema de reservas
-- [ ] Painel do usuário
-- [ ] Sistema de pagamentos
-- [ ] Upload de imagens
-- [ ] Geolocalização
-- [ ] Filtros avançados
-- [ ] Sistema de avaliações
-
 ## 📝 Notas
 
 - O projeto está configurado para **estrangeiros** no cadastro
