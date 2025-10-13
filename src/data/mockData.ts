@@ -22,7 +22,7 @@ export interface Space {
 
 export const spaces: Space[] = [
   {
-    id: '1',
+    id: '932193921',
     title: 'Escritório Coworking Moderno',
     type: 'coworking',
     location: 'São Paulo, SP',
@@ -36,7 +36,7 @@ export const spaces: Space[] = [
     isFavorite: false
   },
   {
-    id: '2',
+    id: '847562391',
     title: 'Vaga de Estacionamento Centro',
     type: 'estacionamento',
     location: 'Rio de Janeiro, RJ',
@@ -50,7 +50,7 @@ export const spaces: Space[] = [
     isFavorite: true
   },
   {
-    id: '3',
+    id: '156783492',
     title: 'Mesa no Restaurante Gourmet',
     type: 'restaurante',
     location: 'Belo Horizonte, MG',
@@ -64,7 +64,7 @@ export const spaces: Space[] = [
     isFavorite: false
   },
   {
-    id: '4',
+    id: '984215673',
     title: 'Sala de Reuniões Executiva',
     type: 'servico',
     location: 'São Paulo, SP',
@@ -78,7 +78,7 @@ export const spaces: Space[] = [
     isFavorite: true
   },
   {
-    id: '5',
+    id: '739485162',
     title: 'Coworking com Vista Mar',
     type: 'coworking',
     location: 'Santos, SP',
@@ -92,7 +92,7 @@ export const spaces: Space[] = [
     isFavorite: false
   },
   {
-    id: '6',
+    id: '582946371',
     title: 'Estacionamento Shopping',
     type: 'estacionamento',
     location: 'São Paulo, SP',
@@ -106,7 +106,7 @@ export const spaces: Space[] = [
     isFavorite: false
   },
   {
-    id: '7',
+    id: '426815739',
     title: 'Quiosque Restaurante Rooftop',
     type: 'restaurante',
     location: 'São Paulo, SP',
@@ -120,7 +120,7 @@ export const spaces: Space[] = [
     isFavorite: true
   },
   {
-    id: '8',
+    id: '317594826',
     title: 'Auditório para Eventos',
     type: 'servico',
     location: 'São Paulo, SP',

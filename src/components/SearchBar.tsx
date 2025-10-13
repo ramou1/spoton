@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { MagnifyingGlassIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
 export default function SearchBar() {
+  const router = useRouter();
   const [searchData, setSearchData] = useState({
     query: ''
   });
@@ -16,8 +18,13 @@ export default function SearchBar() {
   };
 
   const handleSearch = () => {
-    // Implementar lógica de busca
-    console.log('Buscar:', searchData);
+    if (searchData.query.trim()) {
+      // Navegar para página de resultados com query
+      router.push(`/search?q=${encodeURIComponent(searchData.query.trim())}`);
+    } else {
+      // Se não há query, ir para página principal
+      router.push('/');
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

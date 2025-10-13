@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Space } from '@/data/mockData';
 import Image from 'next/image';
 import { HeartIcon, StarIcon } from '@heroicons/react/24/outline';
@@ -22,15 +23,16 @@ export default function SpaceCard({ space }: SpaceCardProps) {
   };
 
   return (
-    <div className="bg-neutral-800 rounded-lg border border-neutral-700 hover:border-purple-400/50 hover:shadow-lg transition-all duration-300 overflow-hidden group hover:scale-[1.02] hover:-translate-y-1">
-      {/* Imagem */}
-      <div className="relative h-40 overflow-hidden">
-        <Image
-          src={space.image}
-          alt={space.title}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-        />
+    <Link href={`/spaces/${space.id}`} className="block">
+      <div className="bg-neutral-800 rounded-lg border border-neutral-700 hover:border-purple-400/50 hover:shadow-lg transition-all duration-300 overflow-hidden group hover:scale-[1.02] hover:-translate-y-1">
+        {/* Imagem */}
+        <div className="relative h-40 overflow-hidden">
+          <Image
+            src={space.image}
+            alt={space.title}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+          />
         
         {/* Botão de favorito */}
         <button
@@ -92,10 +94,14 @@ export default function SpaceCard({ space }: SpaceCardProps) {
         </div>
 
         {/* Botão de reserva */}
-        <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-md font-normal text-sm hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-          Reservar
+        <button 
+          className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-md font-normal text-sm hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          onClick={(e) => e.preventDefault()}
+        >
+          Ver detalhes
         </button>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
