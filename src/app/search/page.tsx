@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useState, useEffect, useMemo, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
@@ -9,9 +9,8 @@ import SpaceCard from '@/components/SpaceCard';
 import { spaces } from '@/data/mockData';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const query = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(query);
 
@@ -40,7 +39,7 @@ export default function SearchPage() {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen bg-neutral-950">
+    <>
       <Header />
       
       {/* Seção de busca */}
@@ -151,6 +150,23 @@ export default function SearchPage() {
           </div>
         </div>
       </footer>
+    </>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <div className="min-h-screen bg-neutral-950">
+      <Suspense fallback={
+        <div className="min-h-screen bg-neutral-950 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto mb-4"></div>
+            <p className="text-gray-400">Carregando...</p>
+          </div>
+        </div>
+      }>
+        <SearchContent />
+      </Suspense>
     </div>
   );
 }

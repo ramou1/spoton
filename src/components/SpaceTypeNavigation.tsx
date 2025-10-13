@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { spaceTypes } from '@/data/mockData';
 
 interface SpaceTypeNavigationProps {

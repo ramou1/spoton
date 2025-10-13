@@ -11,7 +11,6 @@ import {
   ShareIcon, 
   MapPinIcon, 
   StarIcon,
-  WifiIcon,
   ClockIcon,
   UsersIcon,
   ShieldCheckIcon
