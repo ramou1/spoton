@@ -74,13 +74,6 @@ export default function Header() {
                         >
                           Meu perfil
                         </Link>
-                        <Link
-                          href="/reservations"
-                          className="block px-4 py-2 text-sm text-gray-300 hover:bg-neutral-700 hover:text-white transition-colors duration-200"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          Minhas reservas
-                        </Link>
                         <hr className="my-2 border-neutral-700" />
                         <button
                           onClick={() => {
@@ -119,7 +112,7 @@ export default function Header() {
               className="md:hidden p-1.5 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-neutral-800 transition-all duration-200 hover:scale-110 active:scale-95"
             >
               {isMenuOpen ? (
-                <XMarkIcon className="h-5 w-5 animate-spin" />
+                <XMarkIcon className="h-5 w-5" />
               ) : (
                 <Bars3Icon className="h-5 w-5" />
               )}
@@ -130,18 +123,62 @@ export default function Header() {
           {isMenuOpen && (
             <div className="md:hidden border-t border-neutral-700">
               <div className="px-3 py-3 space-y-2 bg-neutral-900/95 backdrop-blur-sm">
-                <button
-                  onClick={openLoginModal}
-                  className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white font-normal text-sm rounded-lg hover:bg-neutral-800 transition-colors duration-200"
-                >
-                  Entrar
-                </button>
-                <button
-                  onClick={openCadastroModal}
-                  className="block w-full px-3 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-normal text-sm text-center hover:from-purple-400 hover:to-purple-500 transition-colors duration-200"
-                >
-                  Cadastrar
-                </button>
+                {isAuthenticated ? (
+                  <>
+                    {/* User Profile Section */}
+                    <div className="flex items-center space-x-3 px-3 py-2">
+                      <Image
+                        src={user?.avatar || '/images/default-avatar.png'}
+                        alt={user?.name || 'Usuário'}
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-100">{user?.name}</p>
+                        <p className="text-xs text-gray-400">{user?.email}</p>
+                      </div>
+                    </div>
+                    
+                    <hr className="border-neutral-700" />
+                    
+                    {/* User Menu Links */}
+                    <Link
+                      href="/profile"
+                      className="block px-3 py-2 text-gray-300 hover:text-white font-normal text-sm rounded-lg hover:bg-neutral-800 transition-colors duration-200"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Meu perfil
+                    </Link>
+                    
+                    <hr className="border-neutral-700" />
+                    
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="block w-full text-left px-3 py-2 text-gray-300 hover:text-white font-normal text-sm rounded-lg hover:bg-neutral-800 transition-colors duration-200"
+                    >
+                      Sair
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={openLoginModal}
+                      className="block w-full text-center px-3 py-2 text-gray-300 hover:text-white font-normal text-sm rounded-lg hover:bg-neutral-800 transition-colors duration-200"
+                    >
+                      Entrar
+                    </button>
+                    <button
+                      onClick={openCadastroModal}
+                      className="block w-full px-3 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg font-normal text-sm text-center hover:from-purple-400 hover:to-purple-500 transition-colors duration-200"
+                    >
+                      Cadastrar
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           )}

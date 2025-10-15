@@ -5,6 +5,11 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import ReservationModal from '@/components/ReservationModal';
+import PaymentModal from '@/components/PaymentModal';
+import AuthModal from '@/components/AuthModal';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToastContext } from '@/contexts/ToastContext';
 import { spaces } from '@/data/mockData';
 import { 
   HeartIcon, 
@@ -13,15 +18,39 @@ import {
   StarIcon,
   ClockIcon,
   UsersIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  WifiIcon,
+  SunIcon,
+  ComputerDesktopIcon,
+  VideoCameraIcon,
+  CakeIcon,
+  SpeakerWaveIcon,
+  ChartBarIcon,
+  PresentationChartLineIcon,
+  ShieldCheckIcon as SecurityIcon,
+  MapIcon,
+  CameraIcon,
+  ShoppingBagIcon,
+  BuildingOfficeIcon,
+  EyeIcon,
+  BeakerIcon,
+  ClipboardDocumentListIcon
 } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 
 export default function SpaceDetailPage() {
   const params = useParams();
   const spaceId = params.id as string;
+  const { user } = useAuth();
+  const { error } = useToastContext();
   const [isFavorite, setIsFavorite] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [duration, setDuration] = useState(1);
+  const [selectedParkingTime, setSelectedParkingTime] = useState<'60min' | '120min' | null>(null);
+  const [plateNumber, setPlateNumber] = useState('');
+  const [showReservationModal, setShowReservationModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Encontrar o espaço pelo ID
   const space = spaces.find(s => s.id === spaceId);
@@ -68,12 +97,87 @@ export default function SpaceDetailPage() {
     setIsFavorite(!isFavorite);
   };
 
+  // Calcular valor total baseado no tipo de espaço
+  const calculateTotalPrice = () => {
+    if (space.type === 'estacionamento') {
+      if (selectedParkingTime === '60min') return 2.00;
+      if (selectedParkingTime === '120min') return 4.00;
+      return 0;
+    }
+    return space.price * duration;
+  };
+
+  const totalPrice = calculateTotalPrice();
+
+  // Funções para lidar com os modais
+  const handleReserveClick = () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    // Validar campos obrigatórios
+    if (space.type === 'estacionamento') {
+      if (!plateNumber.trim() || !selectedParkingTime) {
+        error('Campos obrigatórios', 'Por favor, preencha a placa e selecione o tempo de permanência');
+        return;
+      }
+    } else {
+      if (duration < 1) {
+        error('Duração inválida', 'Por favor, selecione uma duração válida');
+        return;
+      }
+    }
+
+    setShowReservationModal(true);
+  };
+
+  const handleReservationContinue = () => {
+    setShowReservationModal(false);
+    setShowPaymentModal(true);
+  };
+
+  const handleAuthSuccess = () => {
+    setShowAuthModal(false);
+    // Após login bem-sucedido, abrir modal de reserva
+    handleReserveClick();
+  };
+
+  // Função para mapear amenidades para ícones
+  const getAmenityIcon = (amenity: string) => {
+    const amenityLower = amenity.toLowerCase();
+    
+    if (amenityLower.includes('wifi') || amenityLower.includes('internet')) return WifiIcon;
+    if (amenityLower.includes('café') || amenityLower.includes('coffee')) return BeakerIcon;
+    if (amenityLower.includes('ar condicionado') || amenityLower.includes('climatizado')) return SunIcon;
+    if (amenityLower.includes('mesa') || amenityLower.includes('desk')) return ComputerDesktopIcon;
+    if (amenityLower.includes('videoconferência') || amenityLower.includes('video')) return VideoCameraIcon;
+    if (amenityLower.includes('menu') || amenityLower.includes('degustação')) return CakeIcon;
+    if (amenityLower.includes('som') || amenityLower.includes('audio')) return SpeakerWaveIcon;
+    if (amenityLower.includes('flip chart') || amenityLower.includes('quadro')) return ChartBarIcon;
+    if (amenityLower.includes('projetor') || amenityLower.includes('presentation')) return PresentationChartLineIcon;
+    if (amenityLower.includes('segurança') || amenityLower.includes('security')) return SecurityIcon;
+    if (amenityLower.includes('câmeras') || amenityLower.includes('camera')) return CameraIcon;
+    if (amenityLower.includes('metrô') || amenityLower.includes('metro')) return MapIcon;
+    if (amenityLower.includes('shopping') || amenityLower.includes('mall')) return ShoppingBagIcon;
+    if (amenityLower.includes('valet') || amenityLower.includes('carro')) return BuildingOfficeIcon;
+    if (amenityLower.includes('coberto') || amenityLower.includes('covered')) return BuildingOfficeIcon;
+    if (amenityLower.includes('vista') || amenityLower.includes('view')) return EyeIcon;
+    if (amenityLower.includes('coffee break') || amenityLower.includes('break')) return BeakerIcon;
+    if (amenityLower.includes('lugares') || amenityLower.includes('places')) return UsersIcon;
+    if (amenityLower.includes('palco') || amenityLower.includes('stage')) return PresentationChartLineIcon;
+    if (amenityLower.includes('backstage')) return ClipboardDocumentListIcon;
+    if (amenityLower.includes('cama elástica') || amenityLower.includes('piscina')) return UsersIcon;
+    
+    return ClockIcon; // Ícone padrão
+  };
+
   return (
     <div className="min-h-screen bg-neutral-950">
       <Header />
       
       {/* Galeria de imagens */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="relative">
           <div className="h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-xl">
             <Image
@@ -176,14 +280,17 @@ export default function SpaceDetailPage() {
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-100 mb-4">O que este lugar oferece</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {space.amenities.map((amenity, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                {space.amenities.map((amenity, index) => {
+                  const IconComponent = getAmenityIcon(amenity);
+                  return (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center">
+                        <IconComponent className="w-4 h-4 text-purple-400" />
+                      </div>
+                      <span className="text-gray-300">{amenity}</span>
                     </div>
-                    <span className="text-gray-300">{amenity}</span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -242,37 +349,81 @@ export default function SpaceDetailPage() {
                       <input
                         type="text"
                         placeholder="ABC-1234"
+                        value={plateNumber}
+                        onChange={(e) => setPlateNumber(e.target.value)}
                         className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                       />
                     </div>
                   )}
                   
-                  {/* Data e hora de início */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      {space.type === 'estacionamento' ? 'Data e hora de entrada' : 'Data e hora de início'}
-                    </label>
-                    <input
-                      type="datetime-local"
-                      className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                  </div>
-                  
-                  {/* Duração */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Duração (horas)
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="2"
-                      min="1"
-                      className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                  </div>
+                  {/* Formulário específico para estacionamento */}
+                  {space.type === 'estacionamento' ? (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Tempo de permanência
+                      </label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          onClick={() => setSelectedParkingTime('60min')}
+                          className={`p-3 rounded-lg border transition-all duration-200 ${
+                            selectedParkingTime === '60min'
+                              ? 'bg-purple-500 border-purple-500 text-white'
+                              : 'bg-neutral-700 border-neutral-600 text-gray-300 hover:border-purple-500'
+                          }`}
+                        >
+                          <div className="text-sm font-medium">60min</div>
+                          <div className="text-xs opacity-75">R$ 2,00</div>
+                        </button>
+                        <button
+                          onClick={() => setSelectedParkingTime('120min')}
+                          className={`p-3 rounded-lg border transition-all duration-200 ${
+                            selectedParkingTime === '120min'
+                              ? 'bg-purple-500 border-purple-500 text-white'
+                              : 'bg-neutral-700 border-neutral-600 text-gray-300 hover:border-purple-500'
+                          }`}
+                        >
+                          <div className="text-sm font-medium">120min</div>
+                          <div className="text-xs opacity-75">R$ 4,00</div>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {/* Data e hora de início para outros tipos */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Data e hora de início
+                        </label>
+                        <input
+                          type="datetime-local"
+                          className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                      </div>
+                      
+                      {/* Duração para outros tipos */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Duração (horas)
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="2"
+                          min="1"
+                          max="24"
+                          value={duration}
+                          onChange={(e) => setDuration(Math.min(24, Math.max(1, parseInt(e.target.value) || 1)))}
+                          className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                        <p className="text-xs text-gray-400 mt-1">Máximo 24 horas</p>
+                      </div>
+                    </>
+                  )}
                 </div>
 
-                <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] mb-4">
+                <button 
+                  onClick={handleReserveClick}
+                  className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] mb-4"
+                >
                   Reservar agora
                 </button>
 
@@ -282,20 +433,41 @@ export default function SpaceDetailPage() {
 
                 <div className="border-t border-neutral-700 pt-4 mt-4">
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-400">
-                        {formatPrice(space.price, 'hora')} × 1 hora
-                      </span>
-                      <span className="text-gray-100">
-                        R$ {space.price}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between font-medium">
-                      <span className="text-gray-300">Total</span>
-                      <span className="text-gray-100">
-                        R$ {space.price}
-                      </span>
-                    </div>
+                    {space.type === 'estacionamento' ? (
+                      <>
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-400">
+                            Tempo de permanência: {selectedParkingTime || 'Selecione'}
+                          </span>
+                          <span className="text-gray-100">
+                            R$ {selectedParkingTime === '60min' ? '2,00' : selectedParkingTime === '120min' ? '4,00' : '0,00'}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between font-medium">
+                          <span className="text-gray-300">Total</span>
+                          <span className="text-gray-100">
+                            R$ {totalPrice.toFixed(2).replace('.', ',')}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-400">
+                            {formatPrice(space.price, 'hora')} × {duration} {duration === 1 ? 'hora' : 'horas'}
+                          </span>
+                          <span className="text-gray-100">
+                            R$ {(space.price * duration).toFixed(2).replace('.', ',')}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between font-medium">
+                          <span className="text-gray-300">Total</span>
+                          <span className="text-gray-100">
+                            R$ {totalPrice.toFixed(2).replace('.', ',')}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -303,6 +475,34 @@ export default function SpaceDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Modais */}
+      <ReservationModal
+        isOpen={showReservationModal}
+        onClose={() => setShowReservationModal(false)}
+        onContinue={handleReservationContinue}
+        space={space}
+        duration={duration}
+        selectedParkingTime={selectedParkingTime}
+        plateNumber={plateNumber}
+        totalPrice={totalPrice}
+      />
+
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        spaceTitle={space.title}
+        totalPrice={totalPrice}
+        plateNumber={plateNumber}
+        selectedParkingTime={selectedParkingTime}
+        duration={duration}
+      />
+
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={handleAuthSuccess}
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useToastContext } from '@/contexts/ToastContext';
 
 interface CadastroModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface CadastroModalProps {
 }
 
 export default function CadastroModal({ isOpen, onClose, onSwitchToLogin }: CadastroModalProps) {
+  const { success } = useToastContext();
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -88,7 +90,7 @@ export default function CadastroModal({ isOpen, onClose, onSwitchToLogin }: Cada
     
     if (validateForm()) {
       console.log('Dados do cadastro:', formData);
-      alert('Cadastro realizado com sucesso!');
+      success('Cadastro realizado com sucesso!', 'Bem-vindo ao Spoton!');
       onClose();
     }
   };

@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import { useToastContext } from '@/contexts/ToastContext';
 
 export default function Login() {
+  const { success } = useToastContext();
   const [formData, setFormData] = useState({
     email: '',
     senha: ''
@@ -49,7 +51,7 @@ export default function Login() {
     if (validateForm()) {
       // Implementar lógica de login
       console.log('Dados do login:', formData);
-      alert('Login realizado com sucesso!');
+      success('Login realizado com sucesso!', 'Bem-vindo de volta!');
     }
   };
 

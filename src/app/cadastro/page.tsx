@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import { useToastContext } from '@/contexts/ToastContext';
 
 export default function Cadastro() {
+  const { success } = useToastContext();
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -86,7 +88,7 @@ export default function Cadastro() {
     if (validateForm()) {
       // Implementar lógica de cadastro
       console.log('Dados do cadastro:', formData);
-      alert('Cadastro realizado com sucesso!');
+      success('Cadastro realizado com sucesso!', 'Bem-vindo ao Spoton!');
     }
   };
 

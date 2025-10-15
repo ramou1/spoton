@@ -132,6 +132,20 @@ export const spaces: Space[] = [
     description: 'Auditório completo para palestras, apresentações e eventos corporativos.',
     amenities: ['200 lugares', 'Som profissional', 'Palco', 'Backstage'],
     isFavorite: false
+  },
+  {
+    id: '456789123',
+    title: 'Cama Elástica / Piscina de Bolinhas',
+    type: 'servico',
+    location: 'São Paulo, SP',
+    price: 80,
+    pricePer: 'hora',
+    rating: 4.8,
+    reviews: 45,
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
+    description: 'Aluguel de cama elástica e piscina de bolinhas para festas infantis e eventos.',
+    amenities: ['Cama elástica', 'Piscina de bolinhas', 'Segurança', 'Montagem inclusa'],
+    isFavorite: false
   }
 ];
 
