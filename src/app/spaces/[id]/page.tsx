@@ -116,7 +116,13 @@ export default function SpaceDetailPage() {
       return;
     }
 
-    // Validar campos obrigatórios
+    // Para estacionamentos, redirecionar para sistema externo
+    if (space.type === 'estacionamento' && space.externalUrl) {
+      window.open(space.externalUrl, '_blank');
+      return;
+    }
+
+    // Validar campos obrigatórios para outros tipos
     if (space.type === 'estacionamento') {
       if (!plateNumber.trim() || !selectedParkingTime) {
         error('Campos obrigatórios', 'Por favor, preencha a placa e selecione o tempo de permanência');
@@ -274,6 +280,14 @@ export default function SpaceDetailPage() {
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-100 mb-4">Sobre este espaço</h2>
               <p className="text-gray-300 leading-relaxed">{space.description}</p>
+              {space.type === 'estacionamento' && (
+                <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                  <p className="text-blue-300 text-sm">
+                    <strong>ℹ️ Informação:</strong> Este estacionamento utiliza o sistema oficial da prefeitura. 
+                    Ao clicar em &quot;Acessar Sistema Municipal&quot;, você será redirecionado para a plataforma oficial da cidade.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Amenidades */}
@@ -424,11 +438,14 @@ export default function SpaceDetailPage() {
                   onClick={handleReserveClick}
                   className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] mb-4"
                 >
-                  Reservar agora
+                  {space.type === 'estacionamento' ? 'Acessar Sistema Municipal' : 'Reservar agora'}
                 </button>
 
                 <p className="text-center text-gray-400 text-sm">
-                  Você não será cobrado ainda
+                  {space.type === 'estacionamento' 
+                    ? 'Você será redirecionado para o sistema oficial da cidade'
+                    : 'Você não será cobrado ainda'
+                  }
                 </p>
 
                 <div className="border-t border-neutral-700 pt-4 mt-4">

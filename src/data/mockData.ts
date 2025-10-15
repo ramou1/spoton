@@ -18,6 +18,7 @@ export interface Space {
   description: string;
   amenities: string[];
   isFavorite?: boolean;
+  externalUrl?: string;
 }
 
 export const spaces: Space[] = [
@@ -37,17 +38,18 @@ export const spaces: Space[] = [
   },
   {
     id: '847562391',
-    title: 'Vaga de Estacionamento Centro',
+    title: 'Área Azul - Centro Histórico',
     type: 'estacionamento',
-    location: 'Rio de Janeiro, RJ',
-    price: 12,
+    location: 'Brusque, SC',
+    price: 2,
     pricePer: 'hora',
     rating: 4.7,
     reviews: 89,
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
-    description: 'Vaga coberta e segura no centro da cidade, próximo ao metrô.',
-    amenities: ['Coberto', 'Segurança 24h', 'Próximo ao metrô', 'Câmeras'],
-    isFavorite: true
+    description: 'Vagas de estacionamento rotativo na área azul do centro histórico de Brusque. Sistema integrado com a prefeitura municipal.',
+    amenities: ['Área azul', 'Rotativo', 'Sistema municipal', 'Pagamento digital'],
+    isFavorite: true,
+    externalUrl: 'https://estacione.brusque.s2way.com/br'
   },
   {
     id: '156783492',
@@ -93,17 +95,18 @@ export const spaces: Space[] = [
   },
   {
     id: '582946371',
-    title: 'Estacionamento Shopping',
+    title: 'Zona Azul - Centro',
     type: 'estacionamento',
-    location: 'São Paulo, SP',
-    price: 8,
+    location: 'São José dos Campos, SP',
+    price: 2,
     pricePer: 'hora',
     rating: 4.5,
     reviews: 312,
     image: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&h=300&fit=crop',
-    description: 'Vaga no shopping center com acesso direto ao mall.',
-    amenities: ['No shopping', 'Coberto', 'Segurança', 'Valet'],
-    isFavorite: false
+    description: 'Vagas de estacionamento rotativo na zona azul do centro de São José dos Campos. Sistema municipal integrado.',
+    amenities: ['Zona azul', 'Rotativo', 'Sistema municipal', 'Pagamento digital'],
+    isFavorite: false,
+    externalUrl: 'https://sjc.eysa.com.br/site/pqmvirtual'
   },
   {
     id: '426815739',
