@@ -67,9 +67,9 @@ export default function Home() {
               {selectedType !== 'all' && (
                 <button
                   onClick={() => setSelectedType('all')}
-                  className="text-purple-400 hover:text-purple-300 font-normal text-sm"
+                  className="bg-neutral-700 hover:bg-neutral-600 text-gray-200 hover:text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105 active:scale-95 border border-neutral-600 hover:border-purple-400/50"
                 >
-                  Ver todos
+                  ✕ Limpar filtro
                 </button>
               )}
             </div>

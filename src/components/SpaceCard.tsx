@@ -93,13 +93,6 @@ export default function SpaceCard({ space }: SpaceCardProps) {
           </div>
         </div>
 
-        {/* Botão de reserva */}
-        <button 
-          className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-md font-normal text-sm hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          onClick={(e) => e.preventDefault()}
-        >
-          Ver detalhes
-        </button>
         </div>
       </div>
     </Link>
