@@ -19,6 +19,7 @@ export interface Space {
   amenities: string[];
   isFavorite?: boolean;
   externalUrl?: string;
+  appStoreUrl?: string;
 }
 
 export const spaces: Space[] = [
@@ -102,7 +103,7 @@ export const spaces: Space[] = [
     pricePer: 'hora',
     rating: 4.5,
     reviews: 312,
-    image: 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
     description: 'Vagas de estacionamento rotativo na zona azul do centro de São José dos Campos. Sistema municipal integrado.',
     amenities: ['Zona azul', 'Rotativo', 'Sistema municipal', 'Pagamento digital'],
     isFavorite: false,
@@ -149,21 +150,67 @@ export const spaces: Space[] = [
     description: 'Aluguel de cama elástica e piscina de bolinhas para festas infantis e eventos.',
     amenities: ['Cama elástica', 'Piscina de bolinhas', 'Segurança', 'Montagem inclusa'],
     isFavorite: false
+  },
+  {
+    id: 'balneario_camboriu_001',
+    title: 'Área Azul Balneário Camboriú',
+    type: 'estacionamento',
+    location: 'Balneário Camboriú, SC',
+    price: 3,
+    pricePer: 'hora',
+    rating: 4.6,
+    reviews: 156,
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+    description: 'Vagas de estacionamento rotativo na área azul de Balneário Camboriú. Sistema integrado com a prefeitura municipal.',
+    amenities: ['Área azul', 'Rotativo', 'Sistema municipal', 'Pagamento digital'],
+    isFavorite: false,
+    externalUrl: 'https://vagoonline.com.br'
+  },
+  {
+    id: 'campinas_zona_azul_001',
+    title: 'Zona Azul Campinas',
+    type: 'estacionamento',
+    location: 'Campinas, SP',
+    price: 2.5,
+    pricePer: 'hora',
+    rating: 4.4,
+    reviews: 89,
+    image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&h=600&fit=crop',
+    description: 'Vagas de estacionamento rotativo na zona azul de Campinas. Acesse através dos aplicativos oficiais.',
+    amenities: ['Zona azul', 'Rotativo', 'Sistema municipal', 'App móvel'],
+    isFavorite: false,
+    externalUrl: 'https://play.google.com/store/apps/details?id=br.com.emdec.app&pli=1',
+    appStoreUrl: 'https://apps.apple.com/br/app/emdec/id1502426684'
+  },
+  {
+    id: 'piracicaba_zona_azul_001',
+    title: 'Zona Azul Piracicaba',
+    type: 'estacionamento',
+    location: 'Piracicaba, SP',
+    price: 2,
+    pricePer: 'hora',
+    rating: 4.3,
+    reviews: 124,
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+    description: 'Vagas de estacionamento rotativo na zona azul de Piracicaba. Sistema integrado com a prefeitura municipal.',
+    amenities: ['Zona azul', 'Rotativo', 'Sistema municipal', 'Pagamento digital'],
+    isFavorite: false,
+    externalUrl: 'https://www.piracicabadigital.com.br/'
   }
 ];
 
 export const spaceTypes = [
   {
+    id: 'estacionamento',
+    name: 'Estacionamentos',
+    icon: TruckIcon,
+    description: 'Vagas de estacionamento'
+  },
+  {
     id: 'coworking',
     name: 'Coworkings',
     icon: BuildingOfficeIcon,
     description: 'Espaços de trabalho compartilhado'
-  },
-  {
-    id: 'estacionamento',
-    name: 'Estacionamento',
-    icon: TruckIcon,
-    description: 'Vagas de estacionamento'
   },
   {
     id: 'restaurante',

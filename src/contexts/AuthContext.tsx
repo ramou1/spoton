@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface User {
   id: string;
@@ -16,17 +17,10 @@ interface User {
     yearsOnPlatform: number;
   };
   personalInfo: {
-    education?: string;
     work?: string;
     birthDecade?: string;
     hobby?: string;
   };
-  visitedPlaces: Array<{
-    id: string;
-    name: string;
-    type: 'city' | 'neighborhood' | 'country';
-    icon: string;
-  }>;
 }
 
 interface AuthContextType {
@@ -42,8 +36,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Dados mockados do usuário
 const mockUser: User = {
   id: 'user_123',
-  name: 'Ramon',
-  email: 'ramon@email.com',
+  name: 'Fulano de Tal',
+  email: 'fulano@email.com',
   avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
   location: 'São José dos Campos, Brasil',
   verified: true,
@@ -54,21 +48,16 @@ const mockUser: User = {
     yearsOnPlatform: 2
   },
   personalInfo: {
-    education: 'FATEC',
-    work: 'Programador FrontEnd',
+    work: 'Taxista',
     birthDecade: 'Nasci na década de 90',
     hobby: 'Vendo podcasts sobre ciência'
   },
-  visitedPlaces: [
-    { id: '1', name: 'São Paulo', type: 'city', icon: 'globe' },
-    { id: '2', name: 'Penha', type: 'neighborhood', icon: 'house' },
-    { id: '3', name: 'Buenos Aires', type: 'country', icon: 'building' }
-  ]
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // Verificar se há usuário logado no localStorage
@@ -100,6 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('spoton_user');
+    router.push('/'); // Redirecionar para a página principal
   };
 
   const value = {

@@ -13,7 +13,7 @@ export default function Home() {
 
   const filteredSpaces = useMemo(() => {
     if (selectedType === 'all') {
-      return spaces;
+      return spaces.slice(0, 8); // Limitar a 8 espaços em destaque
     }
     return spaces.filter(space => space.type === selectedType);
   }, [selectedType]);

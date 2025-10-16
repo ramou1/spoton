@@ -19,20 +19,6 @@ function ProfileContent() {
   const { user, logout } = useAuth();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState('about');
-  const [currentAvatar, setCurrentAvatar] = useState(user?.avatar || '');
-  const [isEditingAvatar, setIsEditingAvatar] = useState(false);
-
-  // Lista de avatares mockados para escolha
-  const mockAvatars = [
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
-    'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face'
-  ];
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -41,17 +27,14 @@ function ProfileContent() {
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    if (user?.avatar) {
-      setCurrentAvatar(user.avatar);
-    }
-  }, [user?.avatar]);
 
-  const handleAvatarChange = (newAvatar: string) => {
-    setCurrentAvatar(newAvatar);
-    setIsEditingAvatar(false);
-    // Aqui você salvaria no backend
-    console.log('Avatar alterado para:', newAvatar);
+  const handleAvatarChange = () => {
+    // Simular abertura da galeria do dispositivo
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.click();
+    console.log('Abrindo galeria do dispositivo...');
   };
 
   if (!user) {
@@ -102,7 +85,7 @@ function ProfileContent() {
                 >
                   <div className="w-6 h-6 rounded-full bg-neutral-600 flex items-center justify-center">
                     <Image
-                      src={currentAvatar}
+                      src={user.avatar}
                       alt={user.name}
                       width={20}
                       height={20}
@@ -146,7 +129,7 @@ function ProfileContent() {
                     <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
                       <div className="relative group">
                         <Image
-                          src={currentAvatar}
+                          src={user.avatar}
                           alt={user.name}
                           width={80}
                           height={80}
@@ -158,14 +141,14 @@ function ProfileContent() {
                           </div>
                         )}
                         <button
-                          onClick={() => setIsEditingAvatar(!isEditingAvatar)}
+                          onClick={handleAvatarChange}
                           className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                         >
                           <CameraIcon className="w-6 h-6 text-white" />
                         </button>
                       </div>
                       <button
-                        onClick={() => setIsEditingAvatar(!isEditingAvatar)}
+                        onClick={handleAvatarChange}
                         className="mt-2 text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1"
                       >
                         <PhotoIcon className="w-4 h-4" />
@@ -187,33 +170,6 @@ function ProfileContent() {
                     </div>
                   </div>
 
-                  {/* Avatar Selection Modal */}
-                  {isEditingAvatar && (
-                    <div className="mb-6 p-4 bg-neutral-600 rounded-lg">
-                      <h3 className="text-sm font-medium text-gray-100 mb-3">Escolha uma nova foto de perfil</h3>
-                      <div className="grid grid-cols-4 gap-3">
-                        {mockAvatars.map((avatar, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleAvatarChange(avatar)}
-                            className={`relative rounded-full overflow-hidden transition-all duration-200 ${
-                              currentAvatar === avatar 
-                                ? 'ring-2 ring-purple-500 scale-110' 
-                                : 'hover:scale-105'
-                            }`}
-                          >
-                            <Image
-                              src={avatar}
-                              alt={`Avatar ${index + 1}`}
-                              width={60}
-                              height={60}
-                              className="w-full h-full object-cover"
-                            />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                   
                   {/* Form Fields */}
                   <div className="space-y-4">

@@ -86,7 +86,6 @@ export default function SpaceDetailPage() {
     'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop',
     'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop',
     'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&h=600&fit=crop'
   ];
 
   const formatPrice = (price: number, pricePer: string) => {
@@ -111,31 +110,30 @@ export default function SpaceDetailPage() {
 
   // Funções para lidar com os modais
   const handleReserveClick = () => {
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
-
-    // Para estacionamentos, redirecionar para sistema externo
+    // Para estacionamentos, redirecionar para sistema externo (sem necessidade de login)
     if (space.type === 'estacionamento' && space.externalUrl) {
       window.open(space.externalUrl, '_blank');
       return;
     }
 
+    // Para outros tipos, verificar login
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
     // Validar campos obrigatórios para outros tipos
-    if (space.type === 'estacionamento') {
-      if (!plateNumber.trim() || !selectedParkingTime) {
-        error('Campos obrigatórios', 'Por favor, preencha a placa e selecione o tempo de permanência');
-        return;
-      }
-    } else {
-      if (duration < 1) {
-        error('Duração inválida', 'Por favor, selecione uma duração válida');
-        return;
-      }
+    if (duration < 1) {
+      error('Duração inválida', 'Por favor, selecione uma duração válida');
+      return;
     }
 
     setShowReservationModal(true);
+  };
+
+  // Função para lidar com acesso aos apps (Google Play e App Store)
+  const handleAppAccess = (url: string) => {
+    window.open(url, '_blank');
   };
 
   const handleReservationContinue = () => {
@@ -365,8 +363,10 @@ export default function SpaceDetailPage() {
                         placeholder="ABC-1234"
                         value={plateNumber}
                         onChange={(e) => setPlateNumber(e.target.value)}
-                        className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        disabled
+                        className="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-gray-400 placeholder-gray-500 cursor-not-allowed opacity-50"
                       />
+                      <p className="text-xs text-gray-500 mt-1">Campo será habilitado em breve</p>
                     </div>
                   )}
                   
@@ -379,27 +379,22 @@ export default function SpaceDetailPage() {
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           onClick={() => setSelectedParkingTime('60min')}
-                          className={`p-3 rounded-lg border transition-all duration-200 ${
-                            selectedParkingTime === '60min'
-                              ? 'bg-purple-500 border-purple-500 text-white'
-                              : 'bg-neutral-700 border-neutral-600 text-gray-300 hover:border-purple-500'
-                          }`}
+                          disabled
+                          className="p-3 rounded-lg border bg-neutral-700 border-neutral-600 text-gray-400 cursor-not-allowed opacity-50"
                         >
                           <div className="text-sm font-medium">60min</div>
                           <div className="text-xs opacity-75">R$ 2,00</div>
                         </button>
                         <button
                           onClick={() => setSelectedParkingTime('120min')}
-                          className={`p-3 rounded-lg border transition-all duration-200 ${
-                            selectedParkingTime === '120min'
-                              ? 'bg-purple-500 border-purple-500 text-white'
-                              : 'bg-neutral-700 border-neutral-600 text-gray-300 hover:border-purple-500'
-                          }`}
+                          disabled
+                          className="p-3 rounded-lg border bg-neutral-700 border-neutral-600 text-gray-400 cursor-not-allowed opacity-50"
                         >
                           <div className="text-sm font-medium">120min</div>
                           <div className="text-xs opacity-75">R$ 4,00</div>
                         </button>
                       </div>
+                      <p className="text-xs text-gray-500 mt-1">Seleção será habilitada em breve</p>
                     </div>
                   ) : (
                     <>
@@ -434,16 +429,36 @@ export default function SpaceDetailPage() {
                   )}
                 </div>
 
-                <button 
-                  onClick={handleReserveClick}
-                  className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] mb-4"
-                >
-                  {space.type === 'estacionamento' ? 'Acessar Sistema Municipal' : 'Reservar agora'}
-                </button>
+                {space.type === 'estacionamento' && space.appStoreUrl ? (
+                  <div className="space-y-3 mb-4">
+                    <button 
+                      onClick={() => handleAppAccess(space.externalUrl!)}
+                      className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Baixar App (Google Play)
+                    </button>
+                    <button 
+                      onClick={() => handleAppAccess(space.appStoreUrl!)}
+                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-medium hover:from-blue-400 hover:to-blue-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Baixar App (App Store)
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={handleReserveClick}
+                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-purple-400 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] mb-4"
+                  >
+                    {space.type === 'estacionamento' ? 'Acessar Sistema Municipal' : 'Reservar agora'}
+                  </button>
+                )}
 
                 <p className="text-center text-gray-400 text-sm">
                   {space.type === 'estacionamento' 
-                    ? 'Você será redirecionado para o sistema oficial da cidade'
+                    ? (space.appStoreUrl 
+                        ? 'Baixe o aplicativo oficial para acessar o estacionamento'
+                        : 'Você será redirecionado para o sistema oficial da cidade'
+                      )
                     : 'Você não será cobrado ainda'
                   }
                 </p>
@@ -452,17 +467,17 @@ export default function SpaceDetailPage() {
                   <div className="space-y-2 text-sm">
                     {space.type === 'estacionamento' ? (
                       <>
-                        <div className="flex items-center justify-between">
-                          <span className="text-gray-400">
+                        <div className="flex items-center justify-between opacity-50">
+                          <span className="text-gray-500">
                             Tempo de permanência: {selectedParkingTime || 'Selecione'}
                           </span>
-                          <span className="text-gray-100">
+                          <span className="text-gray-500">
                             R$ {selectedParkingTime === '60min' ? '2,00' : selectedParkingTime === '120min' ? '4,00' : '0,00'}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between font-medium">
-                          <span className="text-gray-300">Total</span>
-                          <span className="text-gray-100">
+                        <div className="flex items-center justify-between font-medium opacity-50">
+                          <span className="text-gray-500">Total</span>
+                          <span className="text-gray-500">
                             R$ {totalPrice.toFixed(2).replace('.', ',')}
                           </span>
                         </div>

@@ -15,6 +15,9 @@ interface Space {
   image: string;
   description: string;
   amenities: string[];
+  isFavorite?: boolean;
+  externalUrl?: string;
+  appStoreUrl?: string;
 }
 
 interface ReservationModalProps {
